@@ -31,7 +31,7 @@ notes = {1: {'title': 'First note', 'text': 'This is my first note', 'date': '10
 @app.route('/index')
 def index():
     # get user from database
-    a_user = db.session.query(User).filter_by(email='cscallio@uncc.edu')
+    a_user = db.session.query(User).filter_by(email='cscallio@uncc.edu').one()
 
     return render_template('index.html', user=a_user)
 
@@ -42,7 +42,7 @@ app.run(host=os.getenv('IP', '127.0.0.1'), port=int(os.getenv('PORT', 5000)), de
 @app.route('/notes')
 def get_notes():
     # get user from database
-    a_user = db.session.query(User).filter_by(email='cscallio@uncc.edu')
+    a_user = db.session.query(User).filter_by(email='cscallio@uncc.edu').one()
     # get notes from database
     my_notes = db.session.query(Note).all()
 
@@ -52,9 +52,9 @@ def get_notes():
 @app.route('/notes/<note_id>')
 def get_note(note_id):
     # get user from database
-    a_user = db.session.query(User).filter_by(email='cscallio@uncc.edu')
+    a_user = db.session.query(User).filter_by(email='cscallio@uncc.edu').one()
     # get notes from database
-    my_note = db.session.query(Note).filter_by(id=note_id)
+    my_note = db.session.query(Note).filter_by(id=note_id).one()
 
     return render_template('note.html', note=my_note, user=a_user)
 
@@ -80,7 +80,7 @@ def new_note():
     else:
         # GET request - show new note form
         # retrieve user from database
-        a_user = db.session.query(User).filter_by(email='cscallio@uncc.edu')
+        a_user = db.session.query(User).filter_by(email='cscallio@uncc.edu').one()
 
         return render_template('new.html', user=a_user)
 
