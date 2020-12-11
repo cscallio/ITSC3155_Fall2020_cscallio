@@ -19,11 +19,6 @@ db.init_app(app)
 with app.app_context():
     db.create_all()  # run under the app context
 
-notes = {1: {'title': 'First note', 'text': 'This is my first note', 'date': '10-1-2020'},
-         2: {'title': 'Second note', 'text': 'This is my second note', 'date': '10-2-2020'},
-         3: {'title': 'Third note', 'text': 'This is my third note', 'date': '10-3-2020'}}
-
-
 # @app.route is a decorator. It gives the function "index" special powers.
 # In this case it makes it so anyone going to "your-url/" makes this function
 # get called. What it returns is what is shown as the web page
@@ -83,6 +78,19 @@ def new_note():
         a_user = db.session.query(User).filter_by(email='cscallio@uncc.edu').one()
 
         return render_template('new.html', user=a_user)
+
+
+@app.route('/notes/edit/<note_id>')
+def update_note(note_id):
+    # GET request - show new note form to edit note
+    # retrieve user from database
+    a_user = db.session.query(User).filter_by(email='cscallio@uncc.edu').one()
+
+    # retrieve note from database
+    my_note = db.session.query(Note).filter_by(id=note_id).one()
+
+    return render_template('new.html', note=my_note, user=a_user)
+
 
 # To see the web page in your web browser, go to the url,
 #   http://127.0.0.1:5000/
