@@ -14,15 +14,19 @@
             <a href="{{ url_for('get_notes') }}"> My Notes</a> ||
             <a href="{{ url_for('new_note') }}"> Add Note</a>
        </nav>
+       <nav>
+            <a href="{{ url_for('register') }}"> Register</a> ||
+            <a href="{{ url_for('login') }}"> Login</a>
+       </nav>
 
-        <h1>Welcome {{user.name}} to the 49er Notes App!</h1>
-    {% if note %}
-       <form action="{{ url_for('update_note', note_id=note.id) }}" method="post"></form>
-    {% else %}
-        <form action="new" method="post">
-    {% endif %}
-            <p><label>Title </label></p>
-            <p><input type="text" name="title"value="{% if note %}{{note.title}} {% endif %}"/></p>
+        <h1>Welcome {{user}} to the 49er Notes App!</h1>
+        {% if note %}
+            <form action="{{ url_for('update_note', note_id=note.id) }}" method="post">
+        {% else %}
+            <form action="new" method="post">
+        {% endif %}
+            <p><label>Title</label></p>
+            <p><input type="text" name="title" value="{% if note %}{{note.title}} {% endif %}"/></p>
             <p><label>Note </label></p>
             <p>
                 <textarea name="noteText" rows="6" cols="0">
@@ -35,11 +39,11 @@
                 </textarea>
             </p>
             <p>
-            {% if note %}
-                <input type="submit" value="Update Note"/>
-            {% else %}
-                <input type="submit" value="Add Note"/>
-            {% endif %}
+                {% if note %}
+                    <input type="submit" value="Update Note"/>
+                {% else %}
+                    <input type="submit" value="Add Note"/>
+                {% endif %}
             </p>
         </form>
     </body>
